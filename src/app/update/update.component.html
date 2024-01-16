@@ -1,0 +1,42 @@
+<form class="text-center border border-light p-5" [formGroup]="animalUpdateForm">
+  <p class="h4 mb-4">Update Animal</p>
+
+  <input type="text"  class="form-control mb-4" placeholder="Animal Name" formControlName="name">
+
+  <input type="number"  class="form-control mb-4" placeholder="Number of Animals" formControlName="no">
+
+  <div *ngIf="animalUpdateForm.get('name')?.hasError('required')">
+    <p class="text-danger">Animal Name is required</p>
+  </div>
+
+  <div *ngIf="animalUpdateForm.get('no')?.hasError('required')">
+    <p class="text-danger">Number of Animals is required</p>
+  </div>
+
+  <div *ngIf="animalUpdateForm.get('no')?.hasError('pattern')">
+    <p class="text-danger">Please enter a valid number</p>
+  </div>
+
+
+  <button class="btn btn-success"
+    (click)="update()"
+  >Update
+
+  </button>
+
+  <button class="btn btn-danger" style="margin-left: 10px"
+
+  (click)="delete()"
+  >
+
+
+    DELETE
+  </button>
+  <button class="btn btn-warning" style="margin-left: 10px"
+  (click)="cancel()"
+  >Cancel</button>
+
+
+</form>
+
+

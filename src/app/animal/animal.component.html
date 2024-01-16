@@ -1,0 +1,7 @@
+<ng-container *ngIf="animal">
+  <td>
+    <a [routerLink]="['/update', animal.id]">{{ animal.id }}</a>
+  </td>
+  <td>{{animal.name}}</td>
+  <td>{{animal.no}}</td>
+</ng-container>

@@ -1,0 +1,55 @@
+<h1 class="card-title" style="margin-left: 10px">Animale</h1>
+
+<button type="button" class="btn btn-primary" mdbRipple style="margin: 10px auto 20px 10px"
+
+(click)="goToAdd()"
+>
+  +
+</button>
+
+<button class="btn btn-warning" style="margin: 10px auto 20px 10px"
+
+        (click)="ascOrDesc()"
+
+>Sort by id {{buton}}</button>
+
+<div *ngIf="!(animalState.loading$ | async)">
+
+
+    <table class="table table-bordered" style="margin-left: 10px">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Animal Name</th>
+        <th>Number of Animals</th>
+      </tr>
+      </thead>
+      <tbody class="tableBody">
+
+
+    <ng-container *ngIf="direction==true">
+
+      <tr class="animal"  [animal]="animal" *ngFor="let animal of ( animals$ | async  |  sortAnimals )">
+
+      </tr>
+    </ng-container>
+
+    <ng-container *ngIf="direction==false">
+      <tr class="animal"  [animal]="animal" *ngFor="let animal of ( animals$ | async  |  sortAnimalsDesc )">
+
+      </tr>
+
+    </ng-container>
+
+
+
+
+
+      </tbody>
+    </table>
+
+</div>
+
+
+<div *ngIf="(animalState.error$ | async) as error" style="background-color: orangered">{{error}}</div>
+<div *ngIf="(animalState.loading$ | async)">Loading...</div>
