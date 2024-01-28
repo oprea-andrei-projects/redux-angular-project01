@@ -5,19 +5,30 @@ import Animal from "../model/animal";
 import {AppState} from "../store/app.reducer";
 import {Store} from "@ngrx/store";
 import {addAnewAnimal, deleteAnimalById, setAllTheAnimals, updateAnimalByID} from "../store/animal/animal.actions";
-import {selectAnimalState} from "../store/animal/animal.selectors";
+import {selectAllTheAnimals, selectAnimalState} from "../store/animal/animal.selectors";
 import {AnimalState} from "../store/animal/animal.reducer";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnimalStateService {
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) {
+
+
+    this.store.select(selectAllTheAnimals).subscribe(data=>{
+
+
+      console.log(data);
+      this.animalsSubject.next(data);
+    })
+  }
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   private errorSubject = new BehaviorSubject<string | null>(null);
+  private animalsSubject = new BehaviorSubject<Animal[]>([])
   loading$ = this.loadingSubject.asObservable();
   error$ = this.errorSubject.asObservable();
+  animals$ = this.animalsSubject.asObservable();
 
 
 
@@ -32,9 +43,11 @@ export class AnimalStateService {
 
 
 
-  animals$ = this.store.select(selectAnimalState).pipe(
-    map(animalState => animalState.animals)
-  );
+  // animals$ = this.store.select(selectAnimalState).pipe(
+  //   map(animalState => animalState.animals)
+  // );
+
+
 
   setLoading(loading:boolean){
 
@@ -53,10 +66,10 @@ export class AnimalStateService {
     );
   }
 
-  setAnimalState(animals: Animal[]){
-    this.store.dispatch(setAllTheAnimals({animals:animals}))
-    console.log(this.animals$.subscribe(data => console.log('animals$',data)));
-  }
+  // setAnimalState(animals: Animal[]){
+  //   this.store.dispatch(setAllTheAnimals({animals:animals}))
+  //   console.log(this.animals$.subscribe(data => console.log('animals$',data)));
+  // }
 
   updateAnimalState(animal:Animal){
 

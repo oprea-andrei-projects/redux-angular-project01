@@ -5,6 +5,10 @@ import {AnimalService} from "../service2/animal.service";
 import Animal from "../model/animal";
 import {Router} from "@angular/router";
 import {SortAnimalsPipe} from "../pipes/sort-animals.pipe";
+import {AnimalEffectsComponent} from "../animal-effects/animal-effects.component";
+import {AppState} from "../store/app.reducer";
+import {Store} from "@ngrx/store";
+import {loadAnimals, setAllTheAnimals} from "../store/animal/animal.actions";
 
 @Component({
   selector: 'app-home2',
@@ -20,11 +24,17 @@ export class Home2Component implements OnInit, OnDestroy{
 
   buton:string='Asc';
 
-  constructor(public animalState: AnimalStateService, public service: AnimalService, private route:Router) {
+  mesaj:string = "mesaj";
 
-     service.getAllTheAnimals();
+  constructor(private store:Store<AppState>,public animalState: AnimalStateService, public service: AnimalService, private route:Router) {
+
+    // service.getAllTheAnimals();
 
     // console.log('din HOME',this.animals$)
+
+    animalState.animals$.subscribe(data=>{
+      console.log(data);
+    })
   }
 
   ascOrDesc(){
@@ -39,8 +49,6 @@ export class Home2Component implements OnInit, OnDestroy{
   }
 
 
-  animals$ = this.animalState.animals$;
-
 
   goToAdd(){
 
@@ -49,8 +57,7 @@ export class Home2Component implements OnInit, OnDestroy{
 
   ngOnInit(): void {
 
-
-
+      this.store.dispatch(loadAnimals({message: "mesaj"}))
   }
 
 }

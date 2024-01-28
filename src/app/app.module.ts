@@ -15,6 +15,8 @@ import { UpdateComponent } from './update/update.component';
 import { Home2Component } from './home2/home2.component';
 import { SortAnimalsPipe } from './pipes/sort-animals.pipe';
 import { SortAnimalsDescPipe } from './pipes/sort-animals-desc.pipe';
+import { AnimalEffectsComponent } from './animal-effects/animal-effects.component';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -25,8 +27,7 @@ import { SortAnimalsDescPipe } from './pipes/sort-animals-desc.pipe';
     Home2Component,
     SortAnimalsPipe,
     SortAnimalsDescPipe,
-
-
+    AnimalEffectsComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +38,7 @@ import { SortAnimalsDescPipe } from './pipes/sort-animals-desc.pipe';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    EffectsModule.forRoot([AnimalEffectsComponent]),
   ],
   providers: [],
   bootstrap: [AppComponent]

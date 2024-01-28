@@ -29,13 +29,13 @@
 
     <ng-container *ngIf="direction==true">
 
-      <tr class="animal"  [animal]="animal" *ngFor="let animal of ( animals$ | async  |  sortAnimals )">
+      <tr class="animal"  [animal]="animal" *ngFor="let animal of (animalState.animals$ | async  |  sortAnimals )">
 
       </tr>
     </ng-container>
 
     <ng-container *ngIf="direction==false">
-      <tr class="animal"  [animal]="animal" *ngFor="let animal of ( animals$ | async  |  sortAnimalsDesc )">
+      <tr class="animal"  [animal]="animal" *ngFor="let animal of ( animalState.animals$ | async  |  sortAnimalsDesc )">
 
       </tr>
 
@@ -53,3 +53,9 @@
 
 <div *ngIf="(animalState.error$ | async) as error" style="background-color: orangered">{{error}}</div>
 <div *ngIf="(animalState.loading$ | async)">Loading...</div>
+<ng-container *ngIf="direction==true">
+
+  <tr class="animal"  [animal]="animal" *ngFor="let animal of (animalState.animals$ | async  |  sortAnimals )">
+
+  </tr>
+</ng-container>

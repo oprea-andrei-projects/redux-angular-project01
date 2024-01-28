@@ -17,28 +17,39 @@ export class AnimalService {
   constructor(private http: HttpClient, private animalState: AnimalStateService, private store:Store<AppState>) { }
 
 
-  getAllTheAnimals() {
-    this.animalState.setLoading(true);
+  // getAllTheAnimals() {
+  //   this.animalState.setLoading(true);
+  //   return this.http.get<Animal[]>(`${this.server}/allAnimals`).pipe(
+  //     catchError(this.handleError)
+  //   ).subscribe({
+  //     next: (animals) => {
+  //
+  //         this.animalState.setAnimalState(animals)
+  //         this.animalState.setLoading(false)
+  //
+  //
+  //     },
+  //     error: (error) => {
+  //
+  //         this.animalState.setError(error);
+  //         this.animalState.setLoading(false);
+  //
+  //     }
+  //   })
+  //
+  //
+  // }
+
+
+  getAllTheAnimals(): Observable<Animal[]> {
     return this.http.get<Animal[]>(`${this.server}/allAnimals`).pipe(
-      catchError(this.handleError)
-    ).subscribe({
-      next: (animals) => {
-
-          this.animalState.setAnimalState(animals)
-          this.animalState.setLoading(false)
-
-
-      },
-      error: (error) => {
-
-          this.animalState.setError(error);
-          this.animalState.setLoading(false);
-
-      }
-    })
-
-
+    catchError(error => throwError(() => error)),
+      tap(data =>console.log('dins SERVICE' , data))
+  );
   }
+
+
+
 
   updateAnimal(animal:Animal):Observable<Animal>{
     return this.http.put<Animal>(`${this.server}/updateAnimal`,animal).pipe(
