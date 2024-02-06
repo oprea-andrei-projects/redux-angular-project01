@@ -7,6 +7,7 @@ import {Store} from "@ngrx/store";
 import {AppState} from "../store/app.reducer";
 import {addAnewAnimal} from "../store/animal/animal.actions";
 import {AnimalService} from "../service2/animal.service";
+import Animal from "../model/animal";
 
 
 @Component({
@@ -17,6 +18,11 @@ import {AnimalService} from "../service2/animal.service";
 export class AddComponent implements OnInit, OnDestroy{
 
   public animalForm!: FormGroup;
+
+  private animal:Animal ={
+    id: 0, isChecked: false, name: "", no: 0
+
+  }
   constructor(private route:Router, private store:Store<AppState>, private service:AnimalService) {
   }
 
@@ -60,15 +66,11 @@ export class AddComponent implements OnInit, OnDestroy{
 
   public addAnimal() {
     if (this.animalForm.valid) {
-      const formData = { ...this.animalForm.value };
-      //console.log('before:', formData);
+    //  const formData = { ...this.animalForm.value };
+      const {name,no}=this.animalForm.value
 
-      this.service.addTheAnimal(formData).subscribe(data=>{
-
-        this.route.navigate([''])
-      })
-
-
+      this.store.dispatch(addAnewAnimal({ animal: { ...this.animal, no, name }}));
+      this.route.navigate(['']);
 
     }
   }

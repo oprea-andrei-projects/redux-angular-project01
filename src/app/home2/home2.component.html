@@ -13,7 +13,7 @@
 
 >Sort by id {{buton}}</button>
 
-<div *ngIf="!(animalState.loading$ | async)">
+<!--<div *ngIf="!(animalState.loading$ | async)">-->
 
 
     <table class="table table-bordered" style="margin-left: 10px">
@@ -48,14 +48,9 @@
       </tbody>
     </table>
 
-</div>
+<!--</div>-->
 
 
 <div *ngIf="(animalState.error$ | async) as error" style="background-color: orangered">{{error}}</div>
-<div *ngIf="(animalState.loading$ | async)">Loading...</div>
-<ng-container *ngIf="direction==true">
+<!--<div *ngIf="(animalState.loading$ | async)">Loading...</div>-->
 
-  <tr class="animal"  [animal]="animal" *ngFor="let animal of (animalState.animals$ | async  |  sortAnimals )">
-
-  </tr>
-</ng-container>

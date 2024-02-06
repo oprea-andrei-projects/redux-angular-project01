@@ -9,6 +9,7 @@ import {AnimalEffectsComponent} from "../animal-effects/animal-effects.component
 import {AppState} from "../store/app.reducer";
 import {Store} from "@ngrx/store";
 import {loadAnimals, setAllTheAnimals} from "../store/animal/animal.actions";
+import {selectAllTheAnimals} from "../store/animal/animal.selectors";
 
 @Component({
   selector: 'app-home2',
@@ -28,12 +29,12 @@ export class Home2Component implements OnInit, OnDestroy{
 
   constructor(private store:Store<AppState>,public animalState: AnimalStateService, public service: AnimalService, private route:Router) {
 
-    // service.getAllTheAnimals();
-
-    // console.log('din HOME',this.animals$)
+    // this.store.select(selectAllTheAnimals).subscribe(
+    //   data => this.animalState.animalsSubject.next(data)
+    // )
 
     animalState.animals$.subscribe(data=>{
-      console.log(data);
+      console.log('din home 2',data);
     })
   }
 

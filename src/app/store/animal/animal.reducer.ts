@@ -26,7 +26,21 @@ export const animalReducer = createReducer(
     })
   ),
 
+  on(Actions.addAnimalSuccess,(state,{message}):AnimalState=>(
+    {
+      ...state,
+      message:message
+    })
+  ),
+
   on(Actions.loadAnimalsFailure,(state,{error}):AnimalState=>(
+    {
+      ...state,
+      error:error
+    })
+  ),
+
+  on(Actions.addAnimalFailure,(state,{error}):AnimalState=>(
     {
       ...state,
       error:error

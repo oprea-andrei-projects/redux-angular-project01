@@ -17,15 +17,14 @@ export class AnimalStateService {
 
     this.store.select(selectAllTheAnimals).subscribe(data=>{
 
-
-      console.log(data);
+     // console.log(data);
       this.animalsSubject.next(data);
     })
   }
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   private errorSubject = new BehaviorSubject<string | null>(null);
-  private animalsSubject = new BehaviorSubject<Animal[]>([])
+  public animalsSubject = new BehaviorSubject<Animal[]>([])
   loading$ = this.loadingSubject.asObservable();
   error$ = this.errorSubject.asObservable();
   animals$ = this.animalsSubject.asObservable();
@@ -71,21 +70,21 @@ export class AnimalStateService {
   //   console.log(this.animals$.subscribe(data => console.log('animals$',data)));
   // }
 
-  updateAnimalState(animal:Animal){
+  // updateAnimalState(animal:Animal){
+  //
+  //   this.store.dispatch(updateAnimalByID({animal}))
+  //
+  // }
 
-    this.store.dispatch(updateAnimalByID({animal}))
+  // deleteAnimalState(id:number){
+  //
+  //   this.store.dispatch(deleteAnimalById({id}))
+  // }
 
-  }
-
-  deleteAnimalState(id:number){
-
-    this.store.dispatch(deleteAnimalById({id}))
-  }
-
-  addAnimalState(animal:Animal){
-
-    this.store.dispatch(addAnewAnimal({animal}))
-  }
+  // addAnimalState(animal:Animal){
+  //
+  //   this.store.dispatch(addAnewAnimal({animal}))
+  // }
 
 
 

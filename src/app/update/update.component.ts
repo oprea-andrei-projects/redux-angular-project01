@@ -6,6 +6,9 @@ import Animal from "../model/animal";
 import {AnimalStateService} from "../stateservice/animal-state.service";
 import {AnimalService} from "../service2/animal.service";
 import {map, switchMap} from "rxjs";
+import {deleteAnimalById, updateAnimalByID} from "../store/animal/animal.actions";
+import {Store} from "@ngrx/store";
+import {AppState} from "../store/app.reducer";
 
 @Component({
   selector: 'app-update',
@@ -20,7 +23,7 @@ export class UpdateComponent implements OnInit, OnDestroy{
     id: 0, isChecked: false, name: "", no: 0
 
   }
-  constructor(private route:Router, private secondRoute: ActivatedRoute, private stateService: AnimalStateService, private service: AnimalService) {
+  constructor(private store: Store<AppState>,private route:Router, private secondRoute: ActivatedRoute, private stateService: AnimalStateService, private service: AnimalService) {
 
 
   }
@@ -49,15 +52,20 @@ export class UpdateComponent implements OnInit, OnDestroy{
   update(){
     const {name,no}=this.animalUpdateForm.value
 
-   this.service.updateAnimal({
-     ...this.animal,
-     no,name
-   }).subscribe(data =>{
+   // this.service.updateAnimal({
+   //   ...this.animal,
+   //   no,name
+   // }).subscribe(data =>{
+   //
+   //      this.route.navigate([''])
+   //   }
+   //
+   // );
 
-        this.route.navigate([''])
-     }
+    this.store.dispatch(updateAnimalByID({ animal: { ...this.animal, no, name } }));
 
-   );
+    this.route.navigate([''])
+
   }
 
   delete(){
@@ -66,13 +74,13 @@ export class UpdateComponent implements OnInit, OnDestroy{
 
       this.id = params['id'];
     })
-    this.service.deleteAnimal(this.id).subscribe(data =>{
 
 
-      this.route.navigate(['']);
-    });
+    this.store.dispatch(deleteAnimalById({ id: this.animal.id }));
 
 
+
+    this.route.navigate(['']);
 
   }
 
@@ -98,14 +106,7 @@ export class UpdateComponent implements OnInit, OnDestroy{
         }
     })
 
-      // this.service.getAnimalById(this.id).subscribe(animal =>{
-      //   console.log('din upate', animal);
-      //   if(animal){
-      //     this.animal = animal;
-      //
-      //    // console.log('din upate', this.animal);
-      //     this.createUpdateForm()
-      //   }
+
 
   }
 }

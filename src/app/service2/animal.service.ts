@@ -54,26 +54,35 @@ export class AnimalService {
   updateAnimal(animal:Animal):Observable<Animal>{
     return this.http.put<Animal>(`${this.server}/updateAnimal`,animal).pipe(
       catchError(this.handleError),
-      tap(anim => this.animalState.updateAnimalState(anim))
+      tap(anim => console.log(anim))
     )
   }
 
   deleteAnimal(id:number):Observable<number>{
 
     return this.http.delete<number>(`${this.server}/deleteAnim/${id}`).pipe(
-      tap(idNo=> this.animalState.deleteAnimalState(idNo))
+      tap(idNo=> console.log(idNo))
     )
   }
+
+  // addTheAnimal(animal:Animal){
+  //
+  //   return this.http.post<Animal>(`${this.server}/addAnimal`,animal).pipe(
+  //     catchError(this.handleError),
+  //     tap((anim:Animal) => this.animalState.addAnimalState(anim))
+  //   )
+  //
+  // }
+
 
   addTheAnimal(animal:Animal){
 
     return this.http.post<Animal>(`${this.server}/addAnimal`,animal).pipe(
       catchError(this.handleError),
-      tap((anim:Animal) => this.animalState.addAnimalState(anim))
+      tap((anim:Animal) => console.log('Animalul adaugat este : ', anim))
     )
 
   }
-
 
 
   private handleError(error: HttpErrorResponse): Observable<never> {
